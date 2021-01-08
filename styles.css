@@ -9,17 +9,19 @@
 #sketch canvas{
     margin: auto;
 }
-.end-screen{
-    width: 100%;
-    height: 100%;
-    background-color: #0000005f;
-    color: white;
+.end-screen-container{
     position: absolute;
     margin: 0;
     top: 0;
     right: 0;
     bottom: 0;
     left: 0;
+}
+.end-screen{
+    width: 100%;
+    height: 100%;
+    background-color: #0000005f;
+    color: white;
     display: flex;
     align-items: center;
     flex-direction: column;

@@ -1,15 +1,22 @@
 let pancake;
-let floor = [];
+let floor;
 let floorBuffer;
 let launcher;
 let floorHeight;
-let chefs = [];
-let gameOver = false;
+let chefs;
+let gameOver;
 let groundLevel;
 let endScreen;
+let score = 0;
+let highScore  = score;
+let displayScore;
+
 
 function setup() {
 	// createCanvas(windowWidth, windowHeight);
+	gameOver = false;
+	floor = [];
+	chefs = [];
 	let canvas = createCanvas(window.innerWidth, 450);
 	canvas.parent("sketch")
 
@@ -30,7 +37,7 @@ function setup() {
     );
 	}
 
-	let numChefs = 10;
+	let numChefs = Math.round(width/80);
 	for (let i = 0; i < numChefs; i++) {
 		chefs.push(new Chef(500, groundLevel - 40, 20, 40));
 	}
@@ -50,6 +57,7 @@ function draw() {
 		tile.shiftAroundWindow(pancake);
 		tile.show();
 	})
+	score = pancake.x
 	accelerate()
 	fill(200, 200,10)
 	chefs.forEach(chef => {
@@ -58,6 +66,10 @@ function draw() {
 		chef.shiftAroundWindow(pancake)
 		chef.collide(pancake)
 	})
+	if(chefs.length > 1 && pancake.x != 0 && pancake.x % 10000 === 0){
+		chefs.pop()
+		console.log(chefs.length)
+	}
 	pop()
 	endGame();
 }
@@ -86,14 +98,29 @@ function accelerate() {
 }
 function endGame(){
 	if(pancake.onFloor()){
-		gameOver = true;
 		if(!endScreen) {
-			endScreen = createElement('div')
-			endScreen.addClass("end-screen").id("end-screen")
-			endScreen.parent("sketch")
+			endScreenContainer = createElement('div')
+			endScreenContainer.addClass("end-screen-container").id("end-screen-container")
+			endScreenContainer.parent("sketch")
+			endScreen = createElement("div");
+			endScreen.addClass("end-screen").id("end-screen");
+			endScreen.parent("end-screen-container");
 			createElement("h1", "Game Over!").parent("end-screen");
-			createElement("p", `Your score: ${Math.round(pancake.x)}`).parent("end-screen");
-			createElement("button", "Play again!").parent("end-screen");
+			displayScore = createElement(
+				"p",
+				`Your score: ${Math.round(score)}`
+			).parent("end-screen");
+			displayScore.html(`Your score: ${Math.round(score)}`);
+			let button = createElement("button", "Play again!").parent("end-screen");
+			button.mousePressed(startGame);
+		}else if(!gameOver){
+			endScreenContainer.show();
+			displayScore.html(`Your score: ${Math.round(score)}`);
 		}
+		gameOver = true;
 	}
+}
+function startGame(){
+	endScreenContainer.hide();
+	setup();
 }
