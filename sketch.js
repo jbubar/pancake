@@ -10,7 +10,7 @@ let endScreen;
 
 function setup() {
 	// createCanvas(windowWidth, windowHeight);
-	let canvas = createCanvas(800, 450);
+	let canvas = createCanvas(window.innerWidth, 450);
 	canvas.parent("sketch")
 
 	// creating floor
