@@ -23,7 +23,6 @@ class Pancake{
         rect(290, this.y, this.width, this.height)
     }
     move(){
-        console.log(this.x)
         this.x += this.vx
         this.y += this.vy
         this.vy += this.gravity
@@ -33,7 +32,6 @@ class Pancake{
         if(this.vx < this.vxMin) this.vx = this.vxMin;
         if(this.vy > this.vyMax) this.vy = this.vyMax;
         if(this.vy < this.vyMin) this.vy = this.vyMin;
-        // console.log(this.vy);
     }
     onFloor(){
         if(this.y >= height - (this.height + this.floorHeight)) return true;

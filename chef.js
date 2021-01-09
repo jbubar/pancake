@@ -21,7 +21,6 @@ class Chef extends WorldObject {
         this.y <= pancake.y + pancake.height && 
         this.x - 290 <= pancake.x + pancake.width && (this.x + this.width - 290) >= pancake.x
       ){
-        console.log("in the cheff!! we made it")
         pancake.y = this.y - pancake.height;
           pancake.vy = - Math.abs(2 * pancake.vy - 1);
           this.collidedBefore = true;

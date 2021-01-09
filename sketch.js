@@ -44,6 +44,13 @@ function setup() {
 
 	launcher = new Launcher(floorHeight);
 	pancake = new Pancake(floorHeight);
+
+	setInterval(() => {
+		if(chefs.length > 1 && !gameOver){
+			chefs.pop();
+			score += 1000;
+		}
+	}, 3000);
 }
 
 function draw() {
@@ -66,10 +73,6 @@ function draw() {
 		chef.shiftAroundWindow(pancake)
 		chef.collide(pancake)
 	})
-	if(chefs.length > 1 && pancake.x != 0 && pancake.x % 10000 === 0){
-		chefs.pop()
-		console.log(chefs.length)
-	}
 	pop()
 	endGame();
 }
