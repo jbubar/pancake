@@ -17,7 +17,7 @@ function setup() {
 	gameOver = false;
 	floor = [];
 	chefs = [];
-	let canvas = createCanvas(window.innerWidth, 450);
+	let canvas = createCanvas(800, 450);
 	canvas.parent("sketch")
 
 	// creating floor
