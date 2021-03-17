@@ -13,44 +13,48 @@ let displayScore;
 
 
 function setup() {
-	// createCanvas(windowWidth, windowHeight);
-	gameOver = false;
-	floor = [];
-	chefs = [];
 	let canvas = createCanvas(800, 450);
-	canvas.parent("sketch")
+  	canvas.parent("sketch");
+	  
 
-	// creating floor
-	let tileWidth = 100;
-	floorHeight = 30;
-	let numTiles = (width / tileWidth) + 1;
-	groundLevel = height - floorHeight;
-	for(let i = 0; i <= numTiles; i++) {
-		floor.push(
+}
+function play(){
+  gameOver = false;
+  floor = [];
+  chefs = [];
+  
+
+  // creating floor
+  let tileWidth = 100;
+  floorHeight = 30;
+  let numTiles = width / tileWidth + 1;
+  groundLevel = height - floorHeight;
+  for (let i = 0; i <= numTiles; i++) {
+    floor.push(
       new FloorTile(
-		numTiles,
-		i * tileWidth,
+        numTiles,
+        i * tileWidth,
         groundLevel,
         tileWidth,
-		floorHeight
+        floorHeight
       )
     );
-	}
+  }
 
-	let numChefs = Math.round(width/80);
-	for (let i = 0; i < numChefs; i++) {
-		chefs.push(new Chef(500, groundLevel - 40, 20, 40));
-	}
+  let numChefs = Math.round(width / 80);
+  for (let i = 0; i < numChefs; i++) {
+    chefs.push(new Chef(500, groundLevel - 40, 20, 40));
+  }
 
-	launcher = new Launcher(floorHeight);
-	pancake = new Pancake(floorHeight);
+  launcher = new Launcher(floorHeight);
+  pancake = new Pancake(floorHeight);
 
-	setInterval(() => {
-		if(chefs.length > 1 && !gameOver){
-			chefs.pop();
-			score += 1000;
-		}
-	}, 3000);
+  setInterval(() => {
+    if (chefs.length > 1 && !gameOver) {
+      chefs.pop();
+      score += 1000;
+    }
+  }, 3000);
 }
 
 function draw() {
@@ -125,5 +129,5 @@ function endGame(){
 }
 function startGame(){
 	endScreenContainer.hide();
-	setup();
+	play();
 }
