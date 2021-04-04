@@ -10,14 +10,16 @@ let endScreen;
 let score = 0;
 let highScore  = score;
 let displayScore;
+let started = false;
 
 
 function setup() {
 	let canvas = createCanvas(800, 450);
   	canvas.parent("sketch");
-	  
+	play()
 
 }
+
 function play(){
   gameOver = false;
   floor = [];
@@ -58,27 +60,30 @@ function play(){
 }
 
 function draw() {
-	background(0,255,255)
-	pancake.show()
-	if(!gameOver) pancake.move()
-	push()
-	translate(-pancake.x, 0)
-	launcher.display(pancake)
-	floor.forEach(tile => {
-		tile.shiftAroundWindow(pancake);
-		tile.show();
-	})
-	score = pancake.x
-	accelerate()
-	fill(200, 200,10)
-	chefs.forEach(chef => {
-		chef.show()
-		if(!gameOver) chef.move()
-		chef.shiftAroundWindow(pancake)
-		chef.collide(pancake)
-	})
-	pop()
-	endGame();
+	runGame();
+}
+function runGame(){
+	background(0, 255, 255);
+    pancake.show();
+    if (!gameOver) pancake.move();
+    push();
+    translate(-pancake.x, 0);
+    launcher.display(pancake);
+    floor.forEach((tile) => {
+      tile.shiftAroundWindow(pancake);
+      tile.show();
+    });
+    score = pancake.x;
+    accelerate();
+    fill(200, 200, 10);
+    chefs.forEach((chef) => {
+      chef.show();
+      if (!gameOver) chef.move();
+      chef.shiftAroundWindow(pancake);
+      chef.collide(pancake);
+    });
+    pop();
+    endGame();
 }
 function mouseClicked() {
 	if(!launcher.fired){
