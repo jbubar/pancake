@@ -37,7 +37,7 @@ function instructions(){
   ).parent("start-screen");
 	// displayScore.html(`Your score: ${Math.round(score)}`);
 	if(!started){
-		let button = createElement("button", "Play again!").parent("start-screen");
+		let button = createElement("button", "Play!").parent("start-screen");
 		button.mousePressed(startGame);
 	}
 	else {
