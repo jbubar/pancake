@@ -16,8 +16,34 @@ let started = false;
 function setup() {
 	let canvas = createCanvas(800, 450);
   	canvas.parent("sketch");
-	play()
+	instructions()
 
+}
+function instructions(){
+	startScreenContainer = createElement("div");
+	startScreenContainer
+		.addClass("start-screen-container")
+		.id("start-screen-container");
+	startScreenContainer.parent("sketch");
+	startScreen = createElement("div");
+	startScreen.addClass("start-screen").id("start-screen");
+	startScreen.parent("start-screen-container");
+	createElement("h1", "Instructions").parent("start-screen");
+	instruction = createElement(
+    "p",
+    `Welcome to the pancake game!<br/> <br/>
+			Click to launch the pancake, and guide it's flight with your mouse<br/><br/>
+			Try not to touch to ground`
+  ).parent("start-screen");
+	// displayScore.html(`Your score: ${Math.round(score)}`);
+	if(!started){
+		let button = createElement("button", "Play again!").parent("start-screen");
+		button.mousePressed(startGame);
+	}
+	else {
+		let button = createElement("button", "Continue").parent("start-screen");
+    	button.mousePressed(()=>{gameOver = false;});
+	}
 }
 
 function play(){
@@ -60,7 +86,9 @@ function play(){
 }
 
 function draw() {
-	runGame();
+	if(started){
+		runGame();
+	} 
 }
 function runGame(){
 	background(0, 255, 255);
@@ -86,7 +114,7 @@ function runGame(){
     endGame();
 }
 function mouseClicked() {
-	if(!launcher.fired){
+	if(started && !launcher.fired){
 		launcher.fire(pancake);
 	}
 }
@@ -96,7 +124,15 @@ function keyPressed() {
 		pancake.jump();
 	}
 	if(keyCode === 32){
-		gameOver = gameOver ?  false : true
+		if(gameOver){
+			gameOver = false;
+			// button.show()
+			startScreenContainer.hide()
+		} else {
+			gameOver = true;
+			startScreenContainer.show()
+			// button.hide()
+		}
 	}
 } 
 
@@ -129,10 +165,19 @@ function endGame(){
 			endScreenContainer.show();
 			displayScore.html(`Your score: ${Math.round(score)}`);
 		}
+		started = false;
+		launcher.fired = false;
 		gameOver = true;
 	}
 }
 function startGame(){
-	endScreenContainer.hide();
+	if(!gameOver){
+		startScreenContainer.hide();
+	} else {
+		endScreenContainer.hide();
+	}
 	play();
+	setTimeout(() => {
+    started = true;
+  }, 10);
 }
